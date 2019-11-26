@@ -1,0 +1,1 @@
+<center>&COPY;[2019] Copyrights by <a  target="_blank" href="https://verraki.africa/solutions/technology/">Verraki TechSolutions</a></center>
