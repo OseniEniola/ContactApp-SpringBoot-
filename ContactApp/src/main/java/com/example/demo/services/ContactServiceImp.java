@@ -49,7 +49,7 @@ public class ContactServiceImp implements ContactService {
 	@Override
 	public List<Contact> findUserContact(Integer userId) {
 		// TODO Auto-generated method stub
-		return repo.findByUserId(userId);
+		return (List<Contact>) repo.findByUserId(userId);
 		
 	}
 	@Override
@@ -67,6 +67,6 @@ public class ContactServiceImp implements ContactService {
 		return jdbcTemplate.query(sql,new ContactRowMapper(),userId);
 	}
 
-	
+	 
 
 }

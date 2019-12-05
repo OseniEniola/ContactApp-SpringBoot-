@@ -36,9 +36,19 @@
 		  <c:if test="${param.act eq 'del' }">
 		 	<p>Contact Deleted Succesfully</p>
 		 </c:if>
+		 
+		 <form align="right" action="<s:url value="/user/contact_search"/>">
+		 	<input type="text" name="freetext" value="${param.freetext }" placeholder="Enter Text To Search"/>
+		 	<button>Find</button>
+		 </form>
+		 <br>
+		 
+		 <form action="<s:url value="/user/bulk_cdelete"/>">
+		 	<button>Delete Selected Records</button><br>
+		 	<br>
 			<center><table border="1" cellpadding="3" border-radius="1em">
 				<tr>
-					<th>SR</th>
+					<th>Select</th>
 					<th>CID</th>
 					<th>NAME</th>
 					<th>PHONE</th>
@@ -55,14 +65,14 @@
 				</tr>
 				<c:forEach var="c" items="${contactList }" varStatus="st">
 					<tr>
-						<td>${st.count}</td>
+						<td align="center"><input type="checkbox" name="cid" value="${c.contactId }"/></td>
 						<td>${c.contactId }</td>
 						<td>${c.name }</td>
 						<td>${c.phone }</td>
 						<td>${c.email }</td>
 						<td>${c.address }</td>
 						<td>${c.remark }</td>
-						<s:url var="url_del" value="/user/editl_contact">
+						<s:url var="url_del" value="/user/del_contact">
 							<s:param name="cid" value="${c.contactId }"></s:param>
 						</s:url>
 						<s:url var="url_edit" value="/user/edit_contact">
@@ -71,7 +81,8 @@
 						<td><a href="${url_edit }">EDIT</a>|<a href="${url_del }">DELETE</a> </td>
 					</tr>
 				</c:forEach>
-			</table></center>	
+			</table></center>
+			</form>	
 	
 		</td>
 	</tr>

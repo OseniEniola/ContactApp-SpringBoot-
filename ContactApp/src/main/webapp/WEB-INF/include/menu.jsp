@@ -5,17 +5,22 @@
  <c:if test="${sessionScope.userid==null}">
  <%--User is not yet Logged in: Guest Menu --%>
   <s:url var="url_reg" value="/reg_form"></s:url>
- <a href="#">Home</a>|
-<a href="#">Login</a>|
+  <s:url var="url_about" value="https://verraki.africa/about/"></s:url>
+  <s:url var="url_help" value="https://verraki.africa/contact/"></s:url>
+      <s:url var="url_home" value="/"></s:url>
+  
+ <a href="${url_home}">Home</a>|
+<a href="${url_home}">Login</a>|
 <a href="${url_reg }">Register</a>|
-<a href="#">About</a>|
-<a href="#">Help</a>
+<a href="${url_about}">About</a>|
+<a href="${url_help}">Help</a>
  </c:if>
  
  <c:if test="${sessionScope.userid !=null && sessionScope.role==1}">
+ <s:url var="url_home" value="/users/dashboard"></s:url>
  <%--Admin is yet Logged in: Admin Menu --%>
- <a href="#">Home</a>|
-<a href="#">User List</a>| 
+ <a href="${url_home}">Home</a>|
+<a href="<s:url value="/admin/users"/>">User List</a>| 
 <a href="${url_logout}">Logout</a>
  </c:if>
   

@@ -8,5 +8,6 @@ import com.example.demo.model.Contact;
 
 public interface ContactRepo extends JpaRepository<Contact, Integer> {
 List<Contact> findByUserId(Integer userid);
+
 }
  

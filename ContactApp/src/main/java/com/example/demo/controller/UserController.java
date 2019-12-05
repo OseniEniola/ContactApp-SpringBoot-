@@ -91,7 +91,12 @@ public class UserController {
 	@RequestMapping("/admin/dashboard")
 	public ModelAndView adminDashboard(){
 		ModelAndView mv=new ModelAndView("dashboard_admin");
-		return mv;
+		return mv; 
+	}
+	@RequestMapping("/admin/users")
+	public String userList(Model m){
+		m.addAttribute("userslist", USI.getUserList());
+		return "users";
 	}
 	
 	
@@ -105,6 +110,17 @@ public class UserController {
 		UserCommand cmd= new UserCommand();
 		m.addAttribute("command", cmd);
 		return "reg_form";
+	}
+	@RequestMapping(value="/admin/change_status")
+	@ResponseBody
+	public String changeLoginStatus(@RequestParam Integer userId,@RequestParam Integer loginStatus ) {
+		try {
+		USI.changeLoginStatus(userId, loginStatus);
+		return "SUCCESS: Status changed";
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "ERROR: Unable to change status";
+		}
 	}
 	
 	@RequestMapping("/register")

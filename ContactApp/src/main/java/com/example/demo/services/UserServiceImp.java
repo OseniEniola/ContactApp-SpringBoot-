@@ -28,6 +28,8 @@ import com.example.demo.model.User;
 public class UserServiceImp extends User implements UserService{
 	@Autowired
 	UserRepo userrepo;
+	@Autowired 
+	UserService CS;
 	@Autowired
 	JdbcTemplate temp;
 	
@@ -56,13 +58,7 @@ public class UserServiceImp extends User implements UserService{
 		Map m= new HashMap();
 		m.put("in", loginName);
 		m.put("pw", password);
-//		Connection conn = null;
-//		PreparedStatement pst;
-//		pst=conn.prepareStatement(sql);
-//		pst.setString(0,loginName);
-//		pst.setString(1,password);
-//		ResultSet rs;
-//		rs= pst.executeQuery(sql);
+
 		try {
 		
 		User u=   (User) namedParameterJdbcTemplate.getJdbcTemplate().queryForObject(sql, m.values().toArray(), new UserRowMapper());
@@ -81,13 +77,19 @@ public class UserServiceImp extends User implements UserService{
 	@Override
 	public List<User> getUserList() {
 		// TODO Auto-generated method stub
-		return null;
+		
+		return userrepo.findByRole(CS.ROLE_USER );
 	}
 
 	@Override
 	public void changeLoginStatus(Integer userId, Integer loginStatus) {
 		// TODO Auto-generated method stub
+		String sql="UPDATE user SET login_Status=? WHERE user_Id=?";
+		Map m= new HashMap();
+		m.put("lst", loginStatus);
+		m.put("uid", userId);
 		
+		temp.update(sql,m.values().toArray());
 	}
 
 	

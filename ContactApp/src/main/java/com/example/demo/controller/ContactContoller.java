@@ -45,9 +45,9 @@ public class ContactContoller {
 			//Save task
 			try {
 				Integer userId= (Integer) session.getAttribute("userid");
-				c.setUserId(userId);
+				c.setUserId(userId);//FK; logged in user
 				CS.save(c);
-				return "redirect:clist?act=sv";
+				return "redirect:clist?act=sv";//redirect to user list url
 			}catch(Exception e) {
 				e.printStackTrace();
 				m.addAttribute("err", "Failed to save contact");
@@ -57,8 +57,10 @@ public class ContactContoller {
 			//Update task
 			try {
 			c.setContactId(contactId);//primary key value
+			Integer userId= (Integer) session.getAttribute("userid");
+			c.setUserId(userId);//FK; logged in user
 				CS.update(c);
-				return "redirect:clist?act=sv";
+				return "redirect:clist?act=ed";
 			}catch(Exception e) {
 				e.printStackTrace();
 				m.addAttribute("err", "Failed to edit contact");
@@ -77,15 +79,27 @@ public class ContactContoller {
 	}
 	// delete contact from the contact list
 	@RequestMapping("/user/del_contact") 
+	public String deleteBuldContact(@RequestParam("cid") Integer contactIds) { 
+		CS.delete(contactIds);
+		return "redirect:clist?act=del";
+	}
+	@RequestMapping("/user/bulk_cdelete") 
 	public String deleteContact(@RequestParam("cid") int contactId) { 
 		CS.delete(contactId);
 		return "redirect:clist?act=del";
 	}
-	@DeleteMapping("/deletecontact/{id}") 
+	@DeleteMapping("/deletecontact/{id}")  
 	public Contact deleteUser(@PathVariable("id") int contactId) { 
 		Contact c=repo.getOne(contactId);
 	repo.delete(c);
 	return c;
+	}
+	@RequestMapping(value="/user/contact_search")
+	public String contactSearch(Model m, HttpSession session, @RequestParam("freetext") String freeText) {
+		Integer userId= (Integer) session.getAttribute("userid");
+		m.addAttribute("contactList",CS.findUserContact(userId,freeText)); 
+		
+		return"clist";//Jsp
 	}
 	@RequestMapping(value="/user/clist")
 	public String contactList(Model m, HttpSession session) {

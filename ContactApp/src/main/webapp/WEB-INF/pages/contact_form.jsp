@@ -33,8 +33,13 @@
 			<h1>Contact Form</h1>
 			<c:if test="${err!= null}">
 				<p class="erro">${err}</p>
+				</c:if>
+				<c:if test="${param.act == 'sv'}">
+				<p class="success">Contact Saved Successfully</p>
 			</c:if>
-			
+				<c:if test="${param.act == 'ed'}">
+				<p class="success">Contact Edited Successfully</p>
+			</c:if>
 			<s:url var="url_csave" value="/user/save_contact"/>
 	 		<f:form action="${url_csave }" modelAttribute="command">
 	 		<table border="1">

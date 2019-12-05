@@ -23,4 +23,5 @@ public interface ContactService {
 	/*This method search contact for user(UserId) based on a given free-text-criteria*/
 	public List<Contact> findUserContact(Integer userId, String txt);
 	
+	
 }
